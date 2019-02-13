@@ -1,4 +1,51 @@
 body {
   margin: 0;
   padding: 0;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  height: 400px;
+  width: 266px;
+  background-color: darkgray;
+  padding: 20px;
+  border-radius: 5px;
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-areas: 
+    'display display display display'
+    'ac plusMinus percent divide'
+    'seven eight nine multiply'
+    'four five six minus'
+    'one two three plus'
+    'zero zero decimal equal'
+}
+
+.btn {
+  border-radius: 50%;
+  background-color: lightgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3rem;
+}
+
+.display {
+  grid-area: display;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 2rem;
+}
+
+.ac {
+  grid-area: ac;
 }
