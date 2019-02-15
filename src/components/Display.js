@@ -4,7 +4,7 @@ class Display extends Component {
   render() {
     return (
       <div className='display'>
-        Show Display Here
+        Display Here
       </div>
     )
   }
