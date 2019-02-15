@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Display from './Display'
-import Inputs from './Inputs'
+// import Inputs from './Inputs'
 import Button from './Button'
 
 class Calculator extends Component {
@@ -13,16 +13,16 @@ class Calculator extends Component {
   }
   render() {
     let buttonArr = [
-      {gridArea: 'ac', label: 'AC'},
-      {gridArea: 'plusMinus', label: '+/-'},
+      {gridArea: 'ac', label: 'AC', math: true},
+      {gridArea: 'plusMinus', label: '+/-', math: true},
       {gridArea: 'nine', label: '9'},
-      {gridArea: 'percent', label: '%'},
-      {gridArea: 'divide', label: '÷'},
-      {gridArea: 'multiply', label: '×'},
-      {gridArea: 'minus', label: '-'},
-      {gridArea: 'plus', label: '+'},
-      {gridArea: 'equal', label: '='},
-      {gridArea: 'decimal', label: '.'},
+      {gridArea: 'percent', label: '%', math: true},
+      {gridArea: 'divide', label: '÷', math: true},
+      {gridArea: 'multiply', label: '×', math: true},
+      {gridArea: 'minus', label: '-', math: true},
+      {gridArea: 'plus', label: '+', math: true},
+      {gridArea: 'equal', label: '=', math: true},
+      {gridArea: 'decimal', label: '.', math: true},
       {gridArea: 'zero', label: '0'},
       {gridArea: 'one', label: '1'},
       {gridArea: 'two', label: '2'},
@@ -33,7 +33,8 @@ class Calculator extends Component {
       {gridArea: 'seven', label: '7'},
       {gridArea: 'eight', label: '8'},
     ]
-    let newBtns = buttonArr.map(button => <Button key={button.gridArea} gridArea={button.gridArea} label={button.label}/>)
+    let mathBtns = buttonArr.filter(button => button.math).map(button => <Button key={button.gridArea} gridArea={button.gridArea} label={button.label} math />)
+    let numBtns = buttonArr.filter(button => !button.math).map(button => <Button key={button.gridArea} gridArea={button.gridArea} label={button.label} />)
     return (
       <div className='container'>
         < Display className='display'/>
@@ -43,7 +44,8 @@ class Calculator extends Component {
         {/* <div className='display'>01234567890</div> */}
         {/* <div className='btn ac'>AC</div> */}
         {/* <Inputs /> */}
-        {newBtns}
+        {mathBtns}
+        {numBtns}
       </div>
     )
   }
