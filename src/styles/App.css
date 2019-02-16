@@ -55,6 +55,7 @@ body {
 .display {
   grid-area: display;
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
   align-items: center;
   font-size: 2rem;
@@ -110,6 +111,17 @@ body {
 
 .zero {
   grid-area: zero;
+  background-color: lightgray;
+  border-radius: 10px;
+  margin: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3rem;
+  -webkit-box-shadow: 1px 1px 5px 0px rgba(78, 60, 60, 0.5);
+  -moz-box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.5);
+  box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.5);
+  transition: box-shadow 3s ease-in-out;
 }
 
 .one {
