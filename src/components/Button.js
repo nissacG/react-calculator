@@ -5,7 +5,7 @@ class Button extends Component {
     let gridArea = this.props.gridArea ? this.props.gridArea : ''
     let mathColor = this.props.math ? 'math' : ''
     return (
-      <div className={`btn ${gridArea} ${mathColor}`}>
+      <div className={`btn ${gridArea} ${mathColor}`} onClick={this.props.onClick}>
         {this.props.label}
       </div>
     )
