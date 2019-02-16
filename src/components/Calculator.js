@@ -8,9 +8,17 @@ class Calculator extends Component {
     super(props)
 
     this.state = {
-      displayFigure: 0
+      display: '',
     }
   }
+
+  onNumClick = (e) => {
+    let currentDisplay = this.state.display;
+    // let newFigure = parseInt(e.target.innerHTML)
+    let newFigure = e.target.innerHTML
+    this.setState({display: currentDisplay + newFigure})
+  }
+
   render() {
     let buttonArr = [
       {gridArea: 'ac', label: 'AC', math: true},
@@ -34,10 +42,10 @@ class Calculator extends Component {
       {gridArea: 'eight', label: '8'},
     ]
     let mathBtns = buttonArr.filter(button => button.math).map(button => <Button key={button.gridArea} gridArea={button.gridArea} label={button.label} math />)
-    let numBtns = buttonArr.filter(button => !button.math).map(button => <Button key={button.gridArea} gridArea={button.gridArea} label={button.label} />)
+    let numBtns = buttonArr.filter(button => !button.math).map(button => <Button key={button.gridArea} gridArea={button.gridArea} label={button.label} onClick={this.onNumClick}/>)
     return (
       <div className='container'>
-        < Display className='display'/>
+        < Display className='display' display={this.state.display ? this.state.display : ''}/>
         {/* Display value={this.state.displayFigure} */}
         {/* Inputs */}
               {/* Buttons - prop with value, prop if number or math*/}
