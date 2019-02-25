@@ -1,15 +1,23 @@
-import React, { Component } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
-class Button extends Component {
-  render() {
-    let gridArea = this.props.gridArea ? this.props.gridArea : ''
-    let mathColor = this.props.math ? 'math' : ''
-    return (
-      <div className={`btn ${gridArea} ${mathColor}`} onClick={this.props.onClick}>
-        {this.props.label}
-      </div>
-    )
-  }
+const Button = ({
+  gridArea, onClick, label, math,
+}) => {
+  const grid = gridArea || ''
+  const mathColor = math ? 'math' : ''
+  return (
+    <div className={`btn ${grid} ${mathColor}`} onClick={onClick} role='link'>
+      {label}
+    </div>
+  )
+}
+
+Button.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  gridArea: PropTypes.string.isRequired,
+  math: PropTypes.bool,
+  label: PropTypes.string.isRequired,
 }
 
 export default Button
