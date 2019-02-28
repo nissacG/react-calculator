@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Display = ({ display }) => (
-  <div className="display">
+const Display = ({ display, clsName }) => (
+  <div className={clsName}>
     {display}
   </div>
 )
