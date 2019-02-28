@@ -1,14 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Display = ({ display, clsName }) => (
+const Display = ({ operationalDisplay, totalDisplay, clsName }) => (
   <div className={clsName}>
-    {display}
+    <span className='opDisplay' >{operationalDisplay}</span>
+    <span className='totDisplay' >{totalDisplay}</span>
   </div>
 )
 
 Display.propTypes = {
-  display: PropTypes.string.isRequired,
+  opDisplay: PropTypes.string,
+  totalDisplay: PropTypes.string
 }
 
 export default Display

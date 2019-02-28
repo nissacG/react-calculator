@@ -39,7 +39,7 @@ class Calculator extends Component {
       let result = JSON.stringify(eval(this.state.totalDisplay))
       this.setState({ totalDisplay: result, equalTriggered: true }, () => console.log(this.state))
     } else {
-      this.setState({ totalDisplay: currentDisplay + replace, equalTriggered: false }, () => console.log(this.state))
+      this.setState({ totalDisplay: currentDisplay + replace, operationalDisplay: currentDisplay + replace, equalTriggered: false }, () => console.log(this.state))
     }
     console.log(replace)
   }
@@ -96,8 +96,8 @@ class Calculator extends Component {
 
     return (
       <div className='container'>
-        <Display clsName='totalDisplay' display={totalDisplay || ''} />
-        <Display clsName='opDisplay' display={operationalDisplay || ''} />
+        <Display clsName='totalDisplay' totalDisplay={totalDisplay || ''} operationalDisplay={operationalDisplay || ''} />
+        {/* <Display clsName='opDisplay' display={operationalDisplay || ''} /> */}
         {mathBtns}
         {numBtns}
       </div>
