@@ -8,40 +8,44 @@ class Calculator extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      display: '',
+      operationalDisplay: '',
+      totalDisplay: '',
       result: null,
       equalTriggered: false
     }
   }
 
   onNumClick = (e) => {
-    const { display, equalTriggered } = this.state
-
-    const currentDisplay = display
-
+    const { totalDisplay, equalTriggered } = this.state
+    const currentDisplay = totalDisplay
     const newFigure = e.target.innerHTML
+
+    this.setState({ equalTriggered: false })
+
     if (!equalTriggered) {
-      this.setState({ display: currentDisplay + newFigure })
+      this.setState({ totalDisplay: currentDisplay + newFigure }, () => console.log(this.state))
     } else {
-      this.setState({ display: newFigure })
+      this.setState({ totalDisplay: newFigure }, () => console.log(this.state))
     }
   }
 
   onMathClick = (e) => {
-    const { display } = this.state
-    const currentDisplay = display
+    const { totalDisplay } = this.state
+    const currentDisplay = totalDisplay
     const operator = e.target.innerHTML
     const replace = operator.replace(/×/g, '*').replace(/÷/g, '/');
     if (operator === '=') {
-      let result = JSON.stringify(eval(this.state.display))
-      this.setState({ display: result, equalTriggered: true }, () => console.log(this.state))
+      // eslint-disable-next-line
+      let result = JSON.stringify(eval(this.state.totalDisplay))
+      this.setState({ totalDisplay: result, equalTriggered: true }, () => console.log(this.state))
     } else {
-      this.setState({ display: currentDisplay + replace }, () => console.log(this.state))
+      this.setState({ totalDisplay: currentDisplay + replace, equalTriggered: false }, () => console.log(this.state))
     }
     console.log(replace)
   }
 
   render() {
+    const { totalDisplay, operationalDisplay } = this.state
     const buttonArr = [
       // fix the first three math functions
       { gridArea: 'ac', label: 'AC', math: true },
@@ -90,10 +94,10 @@ class Calculator extends Component {
       )
     })
 
-    const { display } = this.state
     return (
       <div className='container'>
-        <Display className='display' display={display || ''} />
+        <Display clsName='totalDisplay' display={totalDisplay || ''} />
+        <Display clsName='opDisplay' display={operationalDisplay || ''} />
         {mathBtns}
         {numBtns}
       </div>
