@@ -4,53 +4,81 @@ import React, { Component } from 'react'
 import Display from './Display'
 import Button from './Button'
 
+const initialState = {
+  operationalSummary: '',
+  operationalDisplay: '',
+  totalDisplay: '',
+  result: null,
+  equalTriggered: false,
+  operatorTriggered: false
+}
+
 class Calculator extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      operationalDisplay: '',
-      totalDisplay: '',
-      result: null,
-      equalTriggered: false
-    }
+    this.state = initialState
   }
 
   onNumClick = (e) => {
-    const { totalDisplay, equalTriggered } = this.state
-    const currentDisplay = totalDisplay
+    const { operationalDisplay, operationalSummary, equalTriggered } = this.state
+    const currentDisplay = operationalDisplay
+    const currentSummary = operationalSummary
     const newFigure = e.target.innerHTML
 
     this.setState({ equalTriggered: false })
 
     if (!equalTriggered) {
-      this.setState({ totalDisplay: currentDisplay + newFigure }, () => console.log(this.state))
+      this.setState({
+        operationalDisplay: currentDisplay + newFigure,
+        operationalSummary: currentSummary + newFigure,
+        operatorTriggered: false
+      }, () => console.log(this.state))
     } else {
-      this.setState({ totalDisplay: newFigure }, () => console.log(this.state))
+      this.setState({
+        operationalDisplay: newFigure,
+        operationalSummary: newFigure,
+        totalDisplay: '',
+        operatorTriggered: false
+      }, () => console.log(this.state))
     }
   }
 
   onMathClick = (e) => {
-    const { totalDisplay } = this.state
-    const currentDisplay = totalDisplay
+    const { operationalDisplay, operationalSummary, operatorTriggered } = this.state
+    const currentDisplay = operationalDisplay
+    const currentSummary = operationalSummary
     const operator = e.target.innerHTML
-    const replace = operator.replace(/×/g, '*').replace(/÷/g, '/');
+    const replaceOperator = operator.replace(/×/g, '*').replace(/÷/g, '/')
+    // prevent multiple operator keys pressed
+    if (operatorTriggered) return
     if (operator === '=') {
       // eslint-disable-next-line
-      let result = JSON.stringify(eval(this.state.totalDisplay))
-      this.setState({ totalDisplay: result, equalTriggered: true }, () => console.log(this.state))
+      let result = JSON.stringify(eval(operationalSummary))
+      this.setState({ 
+        totalDisplay: result,
+        equalTriggered: true
+      }, () => console.log(this.state))
     } else {
-      this.setState({ totalDisplay: currentDisplay + replace, operationalDisplay: currentDisplay + replace, equalTriggered: false }, () => console.log(this.state))
+      this.setState({
+        operationalSummary: currentSummary + replaceOperator,
+        operationalDisplay: currentDisplay + operator,
+        equalTriggered: false,
+        operatorTriggered: true
+      }, () => console.log(this.state))
     }
-    console.log(replace)
+  }
+
+  clearClick = () => {
+    this.setState({ initialState })
   }
 
   render() {
     const { totalDisplay, operationalDisplay } = this.state
     const buttonArr = [
-      // fix the first three math functions
-      { gridArea: 'ac', label: 'AC', math: true },
-      { gridArea: 'plusMinus', label: '+/-', math: true },
-      { gridArea: 'percent', label: '%', math: true },
+      // @@ TOOD - fix the first three math functions
+      { gridArea: 'ac', label: 'AC', math: 'AC' },
+      { gridArea: 'plusMinus', label: '+/-', math: 'invert' },
+      { gridArea: 'percent', label: '%', math: '%' },
       { gridArea: 'divide', label: '÷', math: '/' },
       { gridArea: 'multiply', label: '×', math: '*' },
       { gridArea: 'minus', label: '-', math: '-' },
@@ -69,37 +97,52 @@ class Calculator extends Component {
       { gridArea: 'nine', label: '9' },
     ]
 
-    const mathBtns = []
-    const numBtns = []
+    const buttons = []
     buttonArr.map((button) => {
-      if (button.math) {
-        return mathBtns.push(
-          <Button
-            key={button.gridArea}
-            gridArea={button.gridArea}
-            label={button.label}
-            onClick={this.onMathClick}
-            data-value={button.math}
-            math
-          />
-        )
+      switch (button.math) {
+        case 'AC':
+          return buttons.push(
+            <Button
+              key={button.gridArea}
+              gridArea={button.gridArea}
+              label={button.label}
+              onClick={this.clearClick}
+              math
+            />
+          )
+        case '/':
+        case '*':
+        case '-':
+        case '+':
+        case '=':
+        case '%':
+        case 'invert':
+          return buttons.push(
+            <Button
+              key={button.gridArea}
+              gridArea={button.gridArea}
+              label={button.label}
+              onClick={this.onMathClick}
+              math
+            />
+          )
+        default: 
+          return buttons.push(
+            <Button
+              key={button.gridArea}
+              gridArea={button.gridArea}
+              label={button.label}
+              onClick={this.onNumhClick}
+            />
+          )
       }
-      return numBtns.push(
-        <Button
-          key={button.gridArea}
-          gridArea={button.gridArea}
-          label={button.label}
-          onClick={this.onNumClick}
-        />
-      )
     })
 
     return (
       <div className='container'>
-        <Display clsName='totalDisplay' totalDisplay={totalDisplay || ''} operationalDisplay={operationalDisplay || ''} />
+        <Display totalDisplay={totalDisplay || ''} operationalDisplay={operationalDisplay || ''} />
         {/* <Display clsName='opDisplay' display={operationalDisplay || ''} /> */}
-        {mathBtns}
-        {numBtns}
+        {buttons}
       </div>
     )
   }
