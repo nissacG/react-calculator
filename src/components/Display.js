@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Display = ({ operationalDisplay, totalDisplay, clsName }) => (
-  <div className={clsName}>
+const Display = ({ operationalDisplay, totalDisplay }) => (
+  <div className='display'>
     <span className='opDisplay' >{operationalDisplay}</span>
-    <span className='totDisplay' >{totalDisplay}</span>
+    <span className='totalDisplay' >{totalDisplay}</span>
   </div>
 )
 
