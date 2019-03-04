@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable comma-dangle */
 import React, { Component } from 'react'
 import Display from './Display'
 import Button from './Button'
@@ -32,14 +30,14 @@ class Calculator extends Component {
         operationalDisplay: currentDisplay + newFigure,
         operationalSummary: currentSummary + newFigure,
         operatorTriggered: false
-      }, () => console.log(this.state))
+      })
     } else {
       this.setState({
         operationalDisplay: newFigure,
         operationalSummary: newFigure,
         totalDisplay: '',
         operatorTriggered: false
-      }, () => console.log(this.state))
+      })
     }
   }
 
@@ -51,33 +49,36 @@ class Calculator extends Component {
     const replaceOperator = operator.replace(/×/g, '*').replace(/÷/g, '/')
     // prevent multiple operator keys pressed
     if (operatorTriggered) return
-    if (operator === '=') {
+    else if (operator === '=') {
       // eslint-disable-next-line
       let result = JSON.stringify(eval(operationalSummary))
       this.setState({ 
         totalDisplay: result,
         equalTriggered: true
-      }, () => console.log(this.state))
+      })
     } else {
       this.setState({
         operationalSummary: currentSummary + replaceOperator,
         operationalDisplay: currentDisplay + operator,
         equalTriggered: false,
         operatorTriggered: true
-      }, () => console.log(this.state))
+      })
     }
   }
 
   clearClick = () => {
-    this.setState({ initialState })
+    this.setState( initialState )
   }
 
   render() {
     const { totalDisplay, operationalDisplay } = this.state
     const buttonArr = [
-      // @@ TOOD - fix the first three math functions
+      // @@ TOOD - fix the first three math functions below
+      // using the refactoring mentioned below, create a clear last 'new' number and then also clear whole state - update button content too depending on which stage at (either C or AC)
       { gridArea: 'ac', label: 'AC', math: 'AC' },
+      // refactor to make 'new' set of consecutive numbers and a 'running total', then apply the minus/inverse buttong to the 'new' number(s)
       { gridArea: 'plusMinus', label: '+/-', math: 'invert' },
+      // similar to above, use the refactored 'new and 'running total' to then apply the percentage to the 'new' number(s) which then gets actioned to the 'running total'
       { gridArea: 'percent', label: '%', math: '%' },
       { gridArea: 'divide', label: '÷', math: '/' },
       { gridArea: 'multiply', label: '×', math: '*' },
@@ -98,7 +99,7 @@ class Calculator extends Component {
     ]
 
     const buttons = []
-    buttonArr.map((button) => {
+    buttonArr.map(button => {
       switch (button.math) {
         case 'AC':
           return buttons.push(
@@ -132,7 +133,7 @@ class Calculator extends Component {
               key={button.gridArea}
               gridArea={button.gridArea}
               label={button.label}
-              onClick={this.onNumhClick}
+              onClick={this.onNumClick}
             />
           )
       }
