@@ -54,6 +54,7 @@ class Calculator extends Component {
       let result = JSON.stringify(eval(operationalSummary))
       this.setState({ 
         totalDisplay: result,
+        operationalSummary: result,
         equalTriggered: true
       })
     } else {
@@ -116,6 +117,8 @@ class Calculator extends Component {
         case '-':
         case '+':
         case '=':
+        // remove the 2 cases below once new funcs made
+        // eslint-disable-next-line
         case '%':
         case 'invert':
           return buttons.push(
@@ -127,6 +130,26 @@ class Calculator extends Component {
               math
             />
           )
+        // case '%':
+        //   return buttons.push(
+        //     <Button
+        //       key={button.gridArea}
+        //       gridArea={button.gridArea}
+        //       label={button.label}
+        //       onClick={this.PercentClick}
+        //       math
+        //     />
+        //   )
+        // case 'invert':
+        //   return buttons.push(
+        //     <Button
+        //       key={button.gridArea}
+        //       gridArea={button.gridArea}
+        //       label={button.label}
+        //       onClick={this.InvertClick}
+        //       math
+        //     />
+        //   )
         default: 
           return buttons.push(
             <Button
