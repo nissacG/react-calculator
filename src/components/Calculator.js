@@ -4,6 +4,7 @@ import Button from './Button'
 
 const initialState = {
   operationalSummary: '',
+  runningNumSummary: '',
   operationalDisplay: '',
   totalDisplay: '',
   result: null,
@@ -18,7 +19,7 @@ class Calculator extends Component {
   }
 
   onNumClick = (e) => {
-    const { operationalDisplay, operationalSummary, equalTriggered } = this.state
+    const { runningNumSummary, operationalDisplay, operationalSummary, equalTriggered } = this.state
     const currentDisplay = operationalDisplay
     const currentSummary = operationalSummary
     const newFigure = e.target.innerHTML
@@ -27,17 +28,18 @@ class Calculator extends Component {
 
     if (!equalTriggered) {
       this.setState({
+        runningNumSummary: runningNumSummary + newFigure,
         operationalDisplay: currentDisplay + newFigure,
         operationalSummary: currentSummary + newFigure,
         operatorTriggered: false
-      })
+      }, () => console.log(this.state))
     } else {
       this.setState({
         operationalDisplay: newFigure,
         operationalSummary: newFigure,
         totalDisplay: '',
         operatorTriggered: false
-      })
+      }, () => console.log(this.state))
     }
   }
 
@@ -55,16 +57,35 @@ class Calculator extends Component {
       this.setState({ 
         totalDisplay: result,
         operationalSummary: result,
+        runningNumSummary: '',
         equalTriggered: true
-      })
+      }, () => console.log(this.state))
     } else {
       this.setState({
         operationalSummary: currentSummary + replaceOperator,
         operationalDisplay: currentDisplay + operator,
+        runningNumSummary: '',
         equalTriggered: false,
         operatorTriggered: true
-      })
+      }, () => console.log(this.state))
     }
+  }
+
+  InvertClick = () => {
+    const { runningNumSummary } = this.state
+    console.log((Math.sign(runningNumSummary) === 1), runningNumSummary)
+    if (Math.sign(runningNumSummary) === 1) {
+      // this.setState({ runningNumSummary: runningNumSummary * -1 })
+      console.log(runningNumSummary * -1 )
+    } else {
+      // this.setState({ runningNumSummary: Math.abs(runningNumSummary) })
+      console.log(Math.abs(runningNumSummary))
+    }
+
+  }
+
+  PercentClick = (e) => {
+
   }
 
   clearClick = () => {
@@ -120,7 +141,6 @@ class Calculator extends Component {
         // remove the 2 cases below once new funcs made
         // eslint-disable-next-line
         case '%':
-        case 'invert':
           return buttons.push(
             <Button
               key={button.gridArea}
@@ -140,16 +160,16 @@ class Calculator extends Component {
         //       math
         //     />
         //   )
-        // case 'invert':
-        //   return buttons.push(
-        //     <Button
-        //       key={button.gridArea}
-        //       gridArea={button.gridArea}
-        //       label={button.label}
-        //       onClick={this.InvertClick}
-        //       math
-        //     />
-        //   )
+        case 'invert':
+          return buttons.push(
+            <Button
+              key={button.gridArea}
+              gridArea={button.gridArea}
+              label={button.label}
+              onClick={this.InvertClick}
+              math
+            />
+          )
         default: 
           return buttons.push(
             <Button
