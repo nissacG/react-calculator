@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
+import styled from 'styled-components'
 import Display from './Display'
 import Button from './Button'
-import styled from 'styled-components'
 
 const initialState = {
   operationalSummary: '',
