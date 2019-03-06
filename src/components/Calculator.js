@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Display from './Display'
 import Button from './Button'
+import styled from 'styled-components'
 
 const initialState = {
   operationalSummary: '',
@@ -183,13 +184,35 @@ class Calculator extends Component {
     })
 
     return (
-      <div className='container'>
+      <StyledCalculator className='container'>
         <Display totalDisplay={totalDisplay || ''} operationalDisplay={operationalDisplay || ''} />
         {/* <Display clsName='opDisplay' display={operationalDisplay || ''} /> */}
         {buttons}
-      </div>
+      </StyledCalculator>
     )
   }
 }
+
+const StyledCalculator = styled.div`
+  height: 400px;
+  width: 260px;
+  background-color: darkgray;
+  padding: 20px;
+  border-radius: 5px;
+  margin-top: 20px;
+  -webkit-box-shadow: 3px 3px 7px 0px rgba(78, 60, 60, 0.5);
+  -moz-box-shadow: 3px 3px 7px 0px rgba(0,0,0,0.5);
+  box-shadow: 3px 3px 7px 0px rgba(0,0,0,0.5);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-areas: 
+    'display display display display'
+    'ac plusMinus percent divide'
+    'seven eight nine multiply'
+    'four five six minus'
+    'one two three plus'
+    'zero zero decimal equal'
+`
 
 export default Calculator
