@@ -10,7 +10,8 @@ const initialState = {
   totalDisplay: '',
   result: null,
   equalTriggered: false,
-  operatorTriggered: false
+  operatorTriggered: false,
+  invertTriggered: false
 }
 
 class Calculator extends Component {
@@ -20,7 +21,7 @@ class Calculator extends Component {
   }
 
   onNumClick = (e) => {
-    const { runningNumSummary, operationalDisplay, operationalSummary, equalTriggered } = this.state
+    const { runningNumSummary, operationalDisplay, operationalSummary, equalTriggered, invertTriggered } = this.state
     const currentDisplay = operationalDisplay
     const currentSummary = operationalSummary
     const newFigure = e.target.innerHTML
@@ -32,10 +33,19 @@ class Calculator extends Component {
         runningNumSummary: runningNumSummary + newFigure,
         operationalDisplay: currentDisplay + newFigure,
         operationalSummary: currentSummary + newFigure,
+        operatorTriggered: false,
+        totalDisplay: ''
+      }, () => console.log(this.state))
+    } else if (invertTriggered) {
+      this.setState({
+        runningNumSummary: newFigure,
+        operationalDisplay: runningNumSummary,
+        totalDisplay: '',
         operatorTriggered: false
       }, () => console.log(this.state))
     } else {
       this.setState({
+        runningNumSummary: newFigure,
         operationalDisplay: newFigure,
         operationalSummary: newFigure,
         totalDisplay: '',
@@ -52,13 +62,13 @@ class Calculator extends Component {
     const replaceOperator = operator.replace(/×/g, '*').replace(/÷/g, '/')
     // prevent multiple operator keys pressed
     if (operatorTriggered) return
-    else if (operator === '=') {
+    if (operator === '=') {
       // eslint-disable-next-line
       let result = JSON.stringify(eval(operationalSummary))
-      this.setState({ 
+      this.setState({
         totalDisplay: result,
         operationalSummary: result,
-        runningNumSummary: '',
+        runningNumSummary: result,
         equalTriggered: true
       }, () => console.log(this.state))
     } else {
@@ -66,6 +76,7 @@ class Calculator extends Component {
         operationalSummary: currentSummary + replaceOperator,
         operationalDisplay: currentDisplay + operator,
         runningNumSummary: '',
+        totalDisplay: '',
         equalTriggered: false,
         operatorTriggered: true
       }, () => console.log(this.state))
@@ -76,21 +87,32 @@ class Calculator extends Component {
     const { runningNumSummary } = this.state
     console.log((Math.sign(runningNumSummary) === 1), runningNumSummary)
     if (Math.sign(runningNumSummary) === 1) {
-      // this.setState({ runningNumSummary: runningNumSummary * -1 })
-      console.log(runningNumSummary * -1 )
+      const newRunningNumSummary = runningNumSummary * -1
+      this.setState({
+        runningNumSummary: newRunningNumSummary,
+        operationalSummary: newRunningNumSummary,
+        operationalDisplay: newRunningNumSummary,
+        invertTriggered: true
+      })
+      console.log(newRunningNumSummary)
     } else {
-      // this.setState({ runningNumSummary: Math.abs(runningNumSummary) })
-      console.log(Math.abs(runningNumSummary))
+      const newRunningNumSummary = Math.abs(runningNumSummary)
+      this.setState({
+        runningNumSummary: newRunningNumSummary,
+        operationalSummary: newRunningNumSummary,
+        operationalDisplay: newRunningNumSummary,
+        invertTriggered: true
+      })
+      console.log(Math.abs(newRunningNumSummary))
     }
-
   }
 
-  PercentClick = (e) => {
+  PercentClick = () => {
 
   }
 
   clearClick = () => {
-    this.setState( initialState )
+    this.setState(initialState)
   }
 
   render() {
@@ -122,7 +144,7 @@ class Calculator extends Component {
     ]
 
     const buttons = []
-    buttonArr.map(button => {
+    buttonArr.map((button) => {
       switch (button.math) {
         case 'AC':
           return buttons.push(
@@ -139,7 +161,7 @@ class Calculator extends Component {
         case '-':
         case '+':
         case '=':
-        // remove the 2 cases below once new funcs made
+        // remove the % case below once new func made
         // eslint-disable-next-line
         case '%':
           return buttons.push(
@@ -171,7 +193,7 @@ class Calculator extends Component {
               math
             />
           )
-        default: 
+        default:
           return buttons.push(
             <Button
               key={button.gridArea}
