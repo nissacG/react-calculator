@@ -6,7 +6,11 @@ const Button = ({ gridArea, onClick, label, math }) => {
   const grid = gridArea || ''
   const mathColor = math ? 'math' : ''
   return (
-    <StyledButton className={`btn ${mathColor} ${grid}`} onClick={onClick} role='link'>
+    <StyledButton
+      className={`btn ${mathColor} ${grid}`}
+      onClick={onClick}
+      role='link'
+    >
       {label}
     </StyledButton>
   )
@@ -16,7 +20,7 @@ Button.propTypes = {
   onClick: PropTypes.func.isRequired,
   gridArea: PropTypes.string.isRequired,
   math: PropTypes.bool,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired
 }
 
 const StyledButton = styled.div`
@@ -28,18 +32,18 @@ const StyledButton = styled.div`
   align-items: center;
   font-size: 1.3rem;
   -webkit-box-shadow: 1px 1px 5px 0px rgba(78, 60, 60, 0.5);
-  -moz-box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.5);
-  box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.5);
+  -moz-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
   transition: box-shadow 3s ease-in-out;
 
   &:active {
-    -webkit-box-shadow: inset 1px 1px 5px 0px rgba(0,0,0,0.5);
-    -moz-box-shadow: inset 1px 1px 5px 0px rgba(0,0,0,0.5);
-    box-shadow: inset 1px 1px 5px 0px rgba(0,0,0,0.5);
+    -webkit-box-shadow: inset 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: inset 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
   }
 
   &.math {
-    background-color: #F79F1F;
+    background-color: #f79f1f;
   }
 
   &.zero {
@@ -51,12 +55,10 @@ const StyledButton = styled.div`
     align-items: center;
     font-size: 1.3rem;
     -webkit-box-shadow: 1px 1px 5px 0px rgba(78, 60, 60, 0.5);
-    -moz-box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.5);
-    box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
     transition: box-shadow 3s ease-in-out;
   }
-
-
 `
 
 export default Button

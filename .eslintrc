@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "wesbos"
+  ], 
+  "rules": {
+    "no-eval": 0,
+    "jsx-quotes": ["error", "prefer-single"],
+    "prettier/prettier": [
+      "error",
+      {
+        "trailingComma": "none",
+        "singleQuote": true,
+        "printWidth": 80,
+        "semi": false,
+        "jsxSingleQuote": true
+      }
+    ]
+  }
+}

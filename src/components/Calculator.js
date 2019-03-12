@@ -20,8 +20,14 @@ class Calculator extends Component {
     this.state = initialState
   }
 
-  onNumClick = (e) => {
-    const { runningNumSummary, operationalDisplay, operationalSummary, equalTriggered, invertTriggered } = this.state
+  onNumClick = e => {
+    const {
+      runningNumSummary,
+      operationalDisplay,
+      operationalSummary,
+      equalTriggered,
+      invertTriggered
+    } = this.state
     const currentDisplay = operationalDisplay
     const currentSummary = operationalSummary
     const newFigure = e.target.innerHTML
@@ -35,14 +41,14 @@ class Calculator extends Component {
         operationalSummary: currentSummary + newFigure,
         operatorTriggered: false,
         totalDisplay: ''
-      }, () => console.log(this.state))
+      })
     } else if (invertTriggered) {
       this.setState({
         runningNumSummary: newFigure,
         operationalDisplay: runningNumSummary,
         totalDisplay: '',
         operatorTriggered: false
-      }, () => console.log(this.state))
+      })
     } else {
       this.setState({
         runningNumSummary: newFigure,
@@ -50,12 +56,16 @@ class Calculator extends Component {
         operationalSummary: newFigure,
         totalDisplay: '',
         operatorTriggered: false
-      }, () => console.log(this.state))
+      })
     }
   }
 
-  onMathClick = (e) => {
-    const { operationalDisplay, operationalSummary, operatorTriggered } = this.state
+  onMathClick = e => {
+    const {
+      operationalDisplay,
+      operationalSummary,
+      operatorTriggered
+    } = this.state
     const currentDisplay = operationalDisplay
     const currentSummary = operationalSummary
     const operator = e.target.innerHTML
@@ -63,14 +73,13 @@ class Calculator extends Component {
     // prevent multiple operator keys pressed
     if (operatorTriggered) return
     if (operator === '=') {
-      // eslint-disable-next-line
-      let result = JSON.stringify(eval(operationalSummary))
+      const result = JSON.stringify(eval(operationalSummary))
       this.setState({
         totalDisplay: result,
         operationalSummary: result,
         runningNumSummary: result,
         equalTriggered: true
-      }, () => console.log(this.state))
+      })
     } else {
       this.setState({
         operationalSummary: currentSummary + replaceOperator,
@@ -79,7 +88,7 @@ class Calculator extends Component {
         totalDisplay: '',
         equalTriggered: false,
         operatorTriggered: true
-      }, () => console.log(this.state))
+      })
     }
   }
 
@@ -108,14 +117,11 @@ class Calculator extends Component {
   // }
 
   comingSoonClick = () => {
-    // eslint-disable-next-line no-alert
     alert('Feature coming soon.')
   }
 
   // WIP
-  PercentClick = () => {
-
-  }
+  PercentClick = () => {}
 
   clearClick = () => {
     this.setState(initialState)
@@ -146,11 +152,11 @@ class Calculator extends Component {
       { gridArea: 'six', label: '6' },
       { gridArea: 'seven', label: '7' },
       { gridArea: 'eight', label: '8' },
-      { gridArea: 'nine', label: '9' },
+      { gridArea: 'nine', label: '9' }
     ]
 
     const buttons = []
-    buttonArr.map((button) => {
+    buttonArr.map(button => {
       switch (button.math) {
         case 'AC':
           return buttons.push(
@@ -177,7 +183,6 @@ class Calculator extends Component {
             />
           )
         // remove the % and invert case below once new func made
-        // eslint-disable-next-line
         case '%':
         case 'invert':
           return buttons.push(
@@ -223,7 +228,10 @@ class Calculator extends Component {
 
     return (
       <StyledCalculator className='container'>
-        <Display totalDisplay={totalDisplay || ''} operationalDisplay={operationalDisplay || ''} />
+        <Display
+          totalDisplay={totalDisplay || ''}
+          operationalDisplay={operationalDisplay || ''}
+        />
         {/* <Display clsName='opDisplay' display={operationalDisplay || ''} /> */}
         {buttons}
       </StyledCalculator>
@@ -239,18 +247,18 @@ const StyledCalculator = styled.div`
   border-radius: 5px;
   margin-top: 20px;
   -webkit-box-shadow: 3px 3px 7px 0px rgba(78, 60, 60, 0.5);
-  -moz-box-shadow: 3px 3px 7px 0px rgba(0,0,0,0.5);
-  box-shadow: 3px 3px 7px 0px rgba(0,0,0,0.5);
+  -moz-box-shadow: 3px 3px 7px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 3px 3px 7px 0px rgba(0, 0, 0, 0.5);
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-areas: 
+  grid-template-areas:
     'display display display display'
     'ac plusMinus percent divide'
     'seven eight nine multiply'
     'four five six minus'
     'one two three plus'
-    'zero zero decimal equal'
+    'zero zero decimal equal';
 `
 
 export default Calculator

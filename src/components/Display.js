@@ -4,14 +4,14 @@ import styled from 'styled-components'
 
 const Display = ({ operationalDisplay, totalDisplay }) => (
   <StyledDisplay className='display'>
-    <span className='opDisplay' >{operationalDisplay}</span>
-    <span className='totalDisplay' >{totalDisplay}</span>
+    <span className='opDisplay'>{operationalDisplay}</span>
+    <span className='totalDisplay'>{totalDisplay}</span>
   </StyledDisplay>
 )
 
 Display.propTypes = {
-  opDisplay: PropTypes.string,
-  totalDisplay: PropTypes.string
+  totalDisplay: PropTypes.string,
+  operationalDisplay: PropTypes.string
 }
 
 const StyledDisplay = styled.div`
@@ -27,8 +27,8 @@ const StyledDisplay = styled.div`
   border-radius: 5px;
   margin-bottom: 5px;
   -webkit-box-shadow: 1px 1px 5px 0px rgba(78, 60, 60, 0.5);
-  -moz-box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.5);
-  box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.5);
+  -moz-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
 
   &.opDisplay {
     width: 100%;

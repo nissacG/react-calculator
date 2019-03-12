@@ -1,10 +1,10 @@
 import React from 'react'
-import '../src/styles/App.css'
+import './styles/App.css'
 import styled from 'styled-components'
 import Calculator from './components/Calculator'
 
 const App = () => (
-  <StyledApp className="App">
+  <StyledApp className='App'>
     <Calculator />
   </StyledApp>
 )
