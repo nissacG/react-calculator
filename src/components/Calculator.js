@@ -83,30 +83,36 @@ class Calculator extends Component {
     }
   }
 
-  InvertClick = () => {
-    const { runningNumSummary } = this.state
-    console.log((Math.sign(runningNumSummary) === 1), runningNumSummary)
-    if (Math.sign(runningNumSummary) === 1) {
-      const newRunningNumSummary = runningNumSummary * -1
-      this.setState({
-        runningNumSummary: newRunningNumSummary,
-        operationalSummary: newRunningNumSummary,
-        operationalDisplay: newRunningNumSummary,
-        invertTriggered: true
-      })
-      console.log(newRunningNumSummary)
-    } else {
-      const newRunningNumSummary = Math.abs(runningNumSummary)
-      this.setState({
-        runningNumSummary: newRunningNumSummary,
-        operationalSummary: newRunningNumSummary,
-        operationalDisplay: newRunningNumSummary,
-        invertTriggered: true
-      })
-      console.log(Math.abs(newRunningNumSummary))
-    }
+  // InvertClick = () => {
+  //   const { runningNumSummary } = this.state
+  //   console.log((Math.sign(runningNumSummary) === 1), runningNumSummary)
+  //   if (Math.sign(runningNumSummary) === 1) {
+  //     const newRunningNumSummary = runningNumSummary * -1
+  //     this.setState({
+  //       runningNumSummary: newRunningNumSummary,
+  //       operationalSummary: newRunningNumSummary,
+  //       operationalDisplay: newRunningNumSummary,
+  //       invertTriggered: true
+  //     })
+  //     console.log(newRunningNumSummary)
+  //   } else {
+  //     const newRunningNumSummary = Math.abs(runningNumSummary)
+  //     this.setState({
+  //       runningNumSummary: newRunningNumSummary,
+  //       operationalSummary: newRunningNumSummary,
+  //       operationalDisplay: newRunningNumSummary,
+  //       invertTriggered: true
+  //     })
+  //     console.log(Math.abs(newRunningNumSummary))
+  //   }
+  // }
+
+  comingSoonClick = () => {
+    // eslint-disable-next-line no-alert
+    alert('Feature coming soon.')
   }
 
+  // WIP
   PercentClick = () => {
 
   }
@@ -161,15 +167,25 @@ class Calculator extends Component {
         case '-':
         case '+':
         case '=':
-        // remove the % case below once new func made
-        // eslint-disable-next-line
-        case '%':
           return buttons.push(
             <Button
               key={button.gridArea}
               gridArea={button.gridArea}
               label={button.label}
               onClick={this.onMathClick}
+              math
+            />
+          )
+        // remove the % and invert case below once new func made
+        // eslint-disable-next-line
+        case '%':
+        case 'invert':
+          return buttons.push(
+            <Button
+              key={button.gridArea}
+              gridArea={button.gridArea}
+              label={button.label}
+              onClick={this.comingSoonClick}
               math
             />
           )
@@ -183,16 +199,16 @@ class Calculator extends Component {
         //       math
         //     />
         //   )
-        case 'invert':
-          return buttons.push(
-            <Button
-              key={button.gridArea}
-              gridArea={button.gridArea}
-              label={button.label}
-              onClick={this.InvertClick}
-              math
-            />
-          )
+        // case 'invert':
+        //   return buttons.push(
+        //     <Button
+        //       key={button.gridArea}
+        //       gridArea={button.gridArea}
+        //       label={button.label}
+        //       onClick={this.InvertClick}
+        //       math
+        //     />
+        //   )
         default:
           return buttons.push(
             <Button
